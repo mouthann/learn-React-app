@@ -1,12 +1,17 @@
 import PropTypes from "prop-types";
 
-const Product = ({ label, price }) => {
+
+const Product = ({ children, onDeleteProduct, id }) => {
   return (
-    <>
-      <h1>{label}</h1>
-      <button className="btn btn-info">{price}</button>
-    </>
-  );
+    <div className="my-4">
+    <div className="card text-white bg-primary mb-3" >
+
+  {children}
+</div>
+<button onClick={ () => onDeleteProduct(id)} className="btn btn-light">Delete</button>
+    </div>
+  )
+
 };
 
 Product.propTypes = {
