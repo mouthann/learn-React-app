@@ -2,9 +2,11 @@ import { useState } from "react";
 import Product from "./product";
 import {v4 as uuid} from 'uuid';
 
+
 function Products() {
  const [title, setTitle]=useState("")
  const [price, setPrice]=useState("")
+ const[Message, setMessage]=useState("");
 
   let showList = true;
 
@@ -27,7 +29,14 @@ const [products, setProducts]= useState([
   ])
 
   const titleInput = (e) =>{
-    setTitle(e.target.value)
+    if (e.target.value===""){
+      setMessage("Please enter a valid product name.")
+    }else if (e.target.value.trim().length < 3){
+      setMessage("Product name should be at least three characters long.")
+    } else {
+      setMessage(null)
+    setTitle(e.target.value);
+    }
   }
   const priceInput = (e) => {
     setPrice(e.target.value)
@@ -42,6 +51,8 @@ const [products, setProducts]= useState([
     
   }
   setProducts([myProduct, ...products])
+  setTitle("")
+  setPrice(0)
   };
   
   
@@ -65,12 +76,13 @@ let myList = products.filter(product => product.id !== id)
       <form onSubmit={submitForm}>
         <div className="form-group my-2">
           <label  htmlFor="" className="form-label">Title</label>
-        <input onChange={titleInput} type="text" className="form-control"/>
-        
+        <input defaultValue={title} onChange={titleInput} type="text" className="form-control"/>
+        {Message && (  <div className="alert alert-danger">{Message}</div>)}
+      
         </div>
         <div className="form-group my-2">
           <label htmlFor="" className="form-label">Price</label>
-        <input onChange={priceInput}  type="text" className="form-control"/>
+        <input defaultValue={price} onChange={priceInput}  type="text" className="form-control"/>
         </div>
         <button className="btn btn-warning">Save</button>
         
